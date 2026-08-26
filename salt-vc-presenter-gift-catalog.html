@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salt VC — Pick Your Thank-You Gift</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#21201C;
+    --shell:#F8F1E7;
+    --persimmon:#F7583E;
+    --amber:#FCA745;
+    --citron:#E8FB3F;
+    --cerulean:#0061FF;
+    --card:#FFFFFF;
+    --line:rgba(33,32,28,0.12);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--shell);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk',sans-serif;
+    margin:0;
+  }
+  a{color:var(--cerulean);}
+
+  .topbar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 6vw;
+    background:var(--ink);
+  }
+  .topbar .mark{
+    color:var(--shell);
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    font-size:15px;
+    letter-spacing:0.14em;
+  }
+  .topbar .stripe{
+    display:flex;
+    gap:6px;
+  }
+  .topbar .stripe span{
+    width:16px;height:8px;border-radius:2px;
+  }
+
+  .hero{
+    padding:9vh 6vw 7vh;
+    max-width:1100px;
+  }
+  .hero .eyebrow{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--persimmon);
+    margin-bottom:18px;
+    display:block;
+  }
+  .hero h1{
+    font-size:clamp(56px,11vw,132px);
+    line-height:0.92;
+    font-weight:700;
+    letter-spacing:-0.02em;
+  }
+  .hero p{
+    max-width:560px;
+    font-size:18px;
+    line-height:1.55;
+    margin-top:26px;
+    color:rgba(33,32,28,0.8);
+  }
+
+  .rule-box{
+    margin:0 6vw 40px;
+    max-width:1100px;
+    border-radius:14px;
+    padding:26px 28px;
+    display:flex;
+    gap:18px;
+    align-items:flex-start;
+    background:rgba(0,97,255,0.07);
+    border:1px solid rgba(0,97,255,0.18);
+  }
+  .rule-box svg{flex:none;margin-top:2px;}
+  .rule-box p{margin:0;font-size:15.5px;line-height:1.65;}
+  .rule-box strong{font-weight:600;}
+
+  .section{
+    padding:0 6vw 8vh;
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    flex-wrap:wrap;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:14px;
+    margin-bottom:30px;
+  }
+  .section-head h2{
+    font-size:clamp(30px,4vw,44px);
+    font-weight:700;
+  }
+  .section-head .tagline{
+    font-size:14px;
+    color:rgba(33,32,28,0.65);
+  }
+  .section-head .badge{
+    margin-left:auto;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    padding:6px 12px;
+    border-radius:100px;
+    white-space:nowrap;
+  }
+  .cotopaxi .badge{background:var(--amber);}
+  .rails .badge{background:var(--cerulean);color:var(--shell);}
+  .allbirds .badge{background:var(--citron);}
+
+  .subhead{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:rgba(33,32,28,0.55);
+    margin:0 0 16px;
+    padding-top:6px;
+  }
+  .grid + .subhead{
+    margin-top:34px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(230px,1fr));
+    gap:16px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:18px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .card .info{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    flex-grow:1;
+  }
+  .card .icon{
+    width:34px;height:34px;
+  }
+  .card h3{
+    font-size:15.5px;
+    font-weight:600;
+    line-height:1.3;
+  }
+  .card .desc{
+    font-size:13px;
+    line-height:1.5;
+    color:rgba(33,32,28,0.75);
+  }
+  .card .price{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:14px;
+  }
+  .card .actions{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    text-align:center;
+    text-decoration:none;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:13px;
+    padding:9px 12px;
+    border-radius:8px;
+    border:1.5px solid transparent;
+  }
+  .btn-primary{
+    background:var(--persimmon);
+    color:var(--shell);
+    border-color:var(--persimmon);
+  }
+  .btn-primary:hover{opacity:0.88;}
+  .btn-secondary{
+    background:rgba(0,97,255,0.08);
+    color:var(--cerulean);
+    border-color:rgba(0,97,255,0.25);
+    font-weight:700;
+  }
+  .btn-secondary:hover{background:rgba(0,97,255,0.16);}
+
+  footer{
+    padding:6vh 6vw 8vh;
+    border-top:2px solid var(--ink);
+  }
+  footer p{
+    font-size:14.5px;
+    line-height:1.7;
+    max-width:560px;
+    color:rgba(33,32,28,0.75);
+  }
+  footer a{font-weight:600;}
+
+  @media (max-width:640px){
+    .topbar{padding:18px 5vw;}
+    .hero{padding:7vh 5vw 5vh;}
+    .rule-box, .section, footer{padding-left:5vw;padding-right:5vw;}
+    .card{flex-direction:column;align-items:stretch;}
+    .card .actions{flex:1 1 auto;flex-direction:row;}
+    .card .actions .btn{flex:1;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span class="mark">SALT VC</span>
+  <div class="stripe">
+    <span style="background:var(--persimmon)"></span>
+    <span style="background:var(--amber)"></span>
+    <span style="background:var(--cerulean)"></span>
+  </div>
+</div>
+
+<div class="hero">
+  <span class="eyebrow">LP Conference · A Thank You</span>
+  <h1>YOUR PICK,<br>OUR THANKS.</h1>
+  <p>You gave your time and your story to our LPs, and we want to send something back. Have a look through the gifts below and find the one that fits you. Pick the one you'll get the most use out of, and it's yours.</p>
+</div>
+
+<div class="rule-box">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0061FF" stroke-width="1.6"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7C10 4 6 3 6 5.5S9 8 12 7z"/><path d="M12 7c2-3 6-4 6-1.5S15 8 12 7z"/></svg>
+  <p><strong>How to grab yours:</strong> Take a look through Cotopaxi, Rails, and Allbirds below. See something you like? Click "Choose this gift" and it opens an email to Laurel with your pick already filled in. Add your size, color, and shipping address, hit send, and we'll take it from there.</p>
+</div>
+
+<div class="section cotopaxi">
+  <div class="section-head">
+    <h2>Cotopaxi</h2>
+    <span class="tagline">Packs and bags built for travel.</span>
+  </div>
+  <div class="grid">
+
+    <div class="card">
+      <div class="info">
+      <h3>Tasra 16L Backpack</h3>
+      <p class="desc">A minimalist travel pack with a full-wrap zip opening, a padded laptop sleeve, and straps built for the road.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.cotopaxi.com/products/tasra-16l-backpack" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Cotopaxi%20Tasra%2016L%20Backpack&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Cotopaxi%20Tasra%2016L%20Backpack%20as%20my%20thank-you%20gift.%0D%0A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Allpa 18L Daypack</h3>
+      <p class="desc">A panel-loading daypack for commuters and travelers, with a laptop and tablet sleeve and mesh water bottle pockets.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.cotopaxi.com/products/allpa-18l-daypack" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Cotopaxi%20Allpa%2018L%20Daypack&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Cotopaxi%20Allpa%2018L%20Daypack%20as%20my%20thank-you%20gift.%0D%0A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Allpa 26L Daypack</h3>
+      <p class="desc">A durable daypack with a separate zippered laptop panel and a pass-through strap that sits it upright on a roller bag.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.cotopaxi.com/products/allpa-26l-daypack" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Cotopaxi%20Allpa%2026L%20Daypack&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Cotopaxi%20Allpa%2026L%20Daypack%20as%20my%20thank-you%20gift.%0D%0A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Allpa 60L Gear Hauler Tote</h3>
+      <p class="desc">A large carry-all tote for hauling gear from home to the car, the trailhead, and everywhere between. Structured but flexible, with shoulder and hand carry.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.cotopaxi.com/products/allpa-60l-gear-hauler-tote" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Cotopaxi%20Allpa%2060L%20Gear%20Hauler%20Tote&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Cotopaxi%20Allpa%2060L%20Gear%20Hauler%20Tote%20as%20my%20thank-you%20gift.%0D%0A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section rails">
+  <div class="section-head">
+    <h2>Rails</h2>
+    <span class="tagline">Everyday layers with a clean cut.</span>
+  </div>
+  <h3 class="subhead">Women's</h3>
+  <div class="grid">
+
+    <div class="card">
+      <div class="info">
+      <h3>Mel Shirt</h3>
+      <p class="desc">A slightly boxy, ultra-soft button-up with cuffed cap sleeves, a banded V-neck, and a curved high-low hem.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.rails.com/products/mel-shirt-espresso-gingham" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Rails%20Mel%20Shirt&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Rails%20Mel%20Shirt%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Essie Dress</h3>
+      <p class="desc">An A-line cotton mini dress with a ruffled scoop neckline, center-front ties, and eyelet embroidery throughout.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.rails.com/products/essie-dress-black-eyelet" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Rails%20Essie%20Dress&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Rails%20Essie%20Dress%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Elia Dress</h3>
+      <p class="desc">A trapeze-style mini dress in textured cotton, with a high neckline, shirred bodice, and whipstitch detail.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.rails.com/products/elia-dress-white" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Rails%20Elia%20Dress&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Rails%20Elia%20Dress%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Evangeline Sweater</h3>
+      <p class="desc">A lightweight knit with a flattering boat neck and relaxed fit. Throw on and go anywhere.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.rails.com/products/evangeline-sweater-black-linen-stripe" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Rails%20Evangeline%20Sweater&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Rails%20Evangeline%20Sweater%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+  </div>
+  <h3 class="subhead">Men's</h3>
+  <div class="grid">
+
+    <div class="card">
+      <div class="info">
+      <h3>Gates Hoodie</h3>
+      <p class="desc">A midweight cotton-blend pullover hoodie with a soft micro-waffle texture and a relaxed fit.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.rails.com/products/gates-hoodie-walnut" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Rails%20Gates%20Hoodie&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Rails%20Gates%20Hoodie%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Warren Overshirt</h3>
+      <p class="desc">An ultra-soft, textured chenille overshirt with a point collar and dual chest pockets, built for easy layering.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.rails.com/products/warren-overshirt-wheat-rhubarb-chenille" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Rails%20Warren%20Overshirt&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Rails%20Warren%20Overshirt%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Theo Short Sleeve Sweater</h3>
+      <p class="desc">A cotton-cashmere knit with a crew neckline and classic fit. Short sleeves make it a three-season piece.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.rails.com/products/theo-short-sleeve-sweater-heather-grey" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Rails%20Theo%20Sweater&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Rails%20Theo%20Short%20Sleeve%20Sweater%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Fielder Shirt</h3>
+      <p class="desc">A camp-collar shirt in textured linen-cotton stripe, with short sleeves and a relaxed, slightly cropped fit.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.rails.com/products/fielder-shirt-khaki-white-stripe" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Rails%20Fielder%20Shirt&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Rails%20Fielder%20Shirt%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section allbirds">
+  <div class="section-head">
+    <h2>Allbirds</h2>
+    <span class="tagline">Shoes made from wool and tree fiber.</span>
+  </div>
+  <h3 class="subhead">Women's</h3>
+  <div class="grid">
+
+    <div class="card">
+      <div class="info">
+      <h3>Allbirds Slide</h3>
+      <p class="desc">An easy-on, easy-off slide in soft Tree Knit, made for warm days and everywhere they take you.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.allbirds.com/products/womens-allbirds-slide-mushroom" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Allbirds%20Slide&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Allbirds%20Slide%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Dasher NZ</h3>
+      <p class="desc">A lightweight, breathable running shoe with added heel protection. Fast when you want, comfortable always.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.allbirds.com/products/womens-dasher-nz-blizzard-deep-navy" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Allbirds%20Dasher%20NZ&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Allbirds%20Dasher%20NZ%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Tree Glider</h3>
+      <p class="desc">A sporty, sock-like sneaker with a light, stretchy upper and multi-directional traction for quick pivots.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.allbirds.com/products/womens-tree-gliders-blizzard" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Allbirds%20Tree%20Glider&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Allbirds%20Tree%20Glider%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+  </div>
+  <h3 class="subhead">Men's</h3>
+  <div class="grid">
+
+    <div class="card">
+      <div class="info">
+      <h3>Allbirds Slide</h3>
+      <p class="desc">An easy-on, easy-off slide in soft Tree Knit, made for warm days and everywhere they take you.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.allbirds.com/products/mens-allbirds-slide-anthracite" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Allbirds%20Slide&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Allbirds%20Slide%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Dasher NZ</h3>
+      <p class="desc">A lightweight, breathable running shoe with added heel protection. Fast when you want, comfortable always.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.allbirds.com/products/mens-dasher-nz-anthracite" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Allbirds%20Dasher%20NZ&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Allbirds%20Dasher%20NZ%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="info">
+      <h3>Cruiser</h3>
+      <p class="desc">A classic court-style sneaker in breathable tree fiber, built for everyday wear from the office to happy hour.</p>
+      </div>
+      <div class="actions">
+        <a class="btn btn-secondary" href="https://www.allbirds.com/products/mens-cruiser-dark-navy" target="_blank" rel="noopener">See photos &amp; sizing ↗</a>
+        <a class="btn btn-primary" href="mailto:laurel@salt.vc?subject=Gift%20pick%3A%20Allbirds%20Cruiser&body=Hi%20Laurel%2C%0D%0A%0D%0AI'd%20like%20the%20Allbirds%20Cruiser%20as%20my%20thank-you%20gift.%0D%0A%0D%0ASize%3A%0D%0AColor%3A%0D%0AShipping%20address%3A%0D%0A">Choose this gift</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p style="font-weight:600;color:var(--ink);font-size:16px;margin-bottom:10px;">Thanks again for making time to present. We're glad you're part of this.</p>
+  <p>Questions about sizing, color, or an item not shown here? Email <a href="mailto:laurel@salt.vc">laurel@salt.vc</a>. Gifts ship after the LP Conference wraps on September 23.</p>
+</footer>
+
+</body>
+</html>
